@@ -1,4 +1,8 @@
+const express = require('express');
 const MongoClient = require('mongodb').MongoClient;
+
+const app = express();
+const port = 3000;
 
 // URL de conexão
 const url = 'mongodb+srv://ThiagoCaffaro:adminPassword@banco-1.zljf1bi.mongodb.net/?retryWrites=true&w=majority&appName=Banco-1';
@@ -9,7 +13,8 @@ const dbName = 'sample_mflix';
 // Cria uma nova instância do MongoClient
 const client = new MongoClient(url);
 
-async function run() {
+// Aqui é feito um get no endpoint users onde será retornado em uma resposta os dados em json
+app.get('/users', async (req, res) => {
     try {
         // Conecta ao servidor
         await client.connect();
@@ -23,13 +28,18 @@ async function run() {
 
         // Busca alguns documentos
         const docs = await collection.find({}).toArray();
-        console.log(docs);
+        
+        // Envia os documentos como resposta
+        res.json(docs);
     } catch (err) {
         console.log(err.stack);
+        res.status(500).send('Ocorreu um erro ao buscar os documentos');
     } finally {
         // Fecha a conexão
         await client.close();
     }
-}
+});
 
-run().catch(console.dir);
+app.listen(port, () => {
+  console.log(`A API está rodando na porta: ${port}`);
+});
