@@ -70,7 +70,7 @@ app.post('/add', async (req, res) => {
         res.json(result);
     } catch (err) {
         console.log(err.stack);
-        res.status(500).send('Ocorreu um erro ao inserir o documento');
+        res.status(500).send(`Ocorreu o erro ao inserir o documento: ${err.stack}`);
     } finally {
         // Fecha a conexão
         await client.close();
