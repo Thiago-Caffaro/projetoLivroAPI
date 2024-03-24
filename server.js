@@ -6,6 +6,7 @@ const app = express();
 app.use(cors({
     origin: 'https://thiago-caffaro.github.io'
 }));
+app.use(express.json());
   
 // Permitir qualquer dominio
 // app.use((req, res, next) => {
