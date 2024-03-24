@@ -4,7 +4,7 @@ const app = express();
 const port = 3000;
 
 // Substitua <sua-string-de-conexao> pela sua string de conexão do MongoDB Atlas
-mongoose.connect('<sua-string-de-conexao>', { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect('mongodb+srv://ThiagoCaffaro:adminPassword@banco-1.zljf1bi.mongodb.net/?retryWrites=true&w=majority&appName=Banco-1', { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('Conectado ao MongoDB Atlas'))
   .catch(err => console.error('Erro ao conectar ao MongoDB Atlas:', err));
 
