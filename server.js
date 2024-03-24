@@ -14,7 +14,7 @@ const dbName = 'sample_mflix';
 const client = new MongoClient(url);
 
 // Aqui é feito um get no endpoint users onde será retornado em uma resposta os dados em json
-app.get('/users', async (req, res) => {
+app.get('/', async (req, res) => {
     try {
         // Conecta ao servidor
         await client.connect();
