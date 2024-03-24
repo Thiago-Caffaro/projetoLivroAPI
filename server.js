@@ -15,16 +15,14 @@ const userSchema = new mongoose.Schema({}, { collection: 'users' });
 const User = mongoose.model('User', userSchema, 'users');
 
 app.get('/', (req, res) => {
-  // Faça uma consulta para buscar todos os usuários
-  User.find({}, function(err, users) {
-    if (err) {
+    // Faça uma consulta para buscar todos os usuários
+    User.find({}).then(users => {
+      res.send(users);
+    }).catch(err => {
       console.error(err);
       res.send('Erro ao buscar usuários');
-    } else {
-      res.send(users);
-    }
+    });
   });
-});
 
 app.listen(port, () => {
   console.log(`Servidor rodando em http://localhost:${port}`);
