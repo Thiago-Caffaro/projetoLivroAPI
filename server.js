@@ -1,7 +1,19 @@
 const express = require('express');
 const MongoClient = require('mongodb').MongoClient;
+const cors = require('cors'); 
 
 const app = express();
+app.use(cors({
+    origin: 'https://thiago-caffaro.github.io'
+}));
+  
+// Permitir qualquer dominio
+// app.use((req, res, next) => {
+//    res.header('Access-Control-Allow-Origin', '*');
+//    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+//    next();
+// });
+  
 const port = 3000;
 
 // URL de conexão
@@ -14,7 +26,6 @@ const dbName = 'projetoLivroRpg';
 const client = new MongoClient(url);
 
 // Aqui é feito um get no endpoint users onde será retornado em uma resposta os dados em json
-app.use(express.json());
 app.get('/', async (req, res) => {
     try {
         // Conecta ao servidor
@@ -40,7 +51,6 @@ app.get('/', async (req, res) => {
         await client.close();
     }
 });
-app.use(express.json());
 app.post('/add', async (req, res) => {
     try {
         // Conecta ao servidor
