@@ -1,29 +1,35 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const app = express();
-const port = 3000;
+const MongoClient = require('mongodb').MongoClient;
 
-// Substitua <sua-string-de-conexao> pela sua string de conexão do MongoDB Atlas
-mongoose.connect('mongodb+srv://ThiagoCaffaro:adminPassword@banco-1.zljf1bi.mongodb.net/?retryWrites=true&w=majority&appName=Banco-1', { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('Conectado ao MongoDB Atlas'))
-  .catch(err => console.error('Erro ao conectar ao MongoDB Atlas:', err));
+// URL de conexão
+const url = 'mongodb+srv://ThiagoCaffaro:adminPassword@banco-1.zljf1bi.mongodb.net/?retryWrites=true&w=majority&appName=Banco-1';
 
-// Defina um esquema para os usuários
-const userSchema = new mongoose.Schema({}, { collection: 'users' });
+// Nome do banco de dados
+const dbName = 'sample_mflix';
 
-// Crie um modelo para os usuários
-const User = mongoose.model('User', userSchema, 'users');
+// Cria uma nova instância do MongoClient
+const client = new MongoClient(url);
 
-app.get('/', (req, res) => {
-    // Faça uma consulta para buscar todos os usuários
-    User.find({}).then(users => {
-      res.send(users);
-    }).catch(err => {
-      console.error(err);
-      res.send('Erro ao buscar usuários');
-    });
-  });
+async function run() {
+    try {
+        // Conecta ao servidor
+        await client.connect();
 
-app.listen(port, () => {
-  console.log(`Servidor rodando em http://localhost:${port}`);
-});
+        console.log("Conectado com sucesso ao servidor");
+
+        const db = client.db(dbName);
+
+        // Acessa a coleção
+        const collection = db.collection('users');
+
+        // Busca alguns documentos
+        const docs = await collection.find({}).toArray();
+        console.log(docs);
+    } catch (err) {
+        console.log(err.stack);
+    } finally {
+        // Fecha a conexão
+        await client.close();
+    }
+}
+
+run().catch(console.dir);
