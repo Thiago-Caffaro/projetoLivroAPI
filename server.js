@@ -1,7 +1,7 @@
 const express = require('express');
 const MongoClient = require('mongodb').MongoClient;
 const cors = require('cors'); 
-import dbUrl from './config';
+const dbUrl = require('./config');
 
 const app = express();
 // Permitir apenas este domínio
