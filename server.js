@@ -40,13 +40,17 @@ client.connect()
         });
 
         app.post('/add', async (req, res) => {
-            try {
-                const result = await collection.insertOne(req.body);
-                res.json(result);
-            } catch (err) {
-                console.log(err.stack);
-                res.status(500).send(`Ocorreu o erro ao inserir o documento: ${err.stack}`);
-            }
+            if (req.body) {
+                try {
+                  const result = await collection.insertOne(req.body);
+                  res.json(result);
+                } catch (err) {
+                  console.log(err.stack);
+                  res.status(500).send(`Ocorreu o erro ao inserir o documento: ${err.stack}`);
+                }
+              } else {
+                res.status(400).send('Nenhum corpo de requisição foi enviado');
+              }
         });
 
         app.listen(port, '0.0.0.0', () => {
