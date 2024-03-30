@@ -1,6 +1,7 @@
 const express = require('express');
 const MongoClient = require('mongodb').MongoClient;
 const cors = require('cors'); 
+import dbUrl from './config';
 
 const app = express();
 // Permitir apenas este domínio
@@ -17,7 +18,7 @@ app.use((req, res, next) => {
 });
 
 const port = 3000;
-const url = 'mongodb+srv://ThiagoCaffaro:adminPassword@banco-1.zljf1bi.mongodb.net/?retryWrites=true&w=majority&appName=Banco-1';
+const url = dbUrl;
 const dbName = 'projetoLivroRpg';
 
 const client = new MongoClient(url);
