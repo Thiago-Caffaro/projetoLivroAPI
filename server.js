@@ -3,17 +3,18 @@ const MongoClient = require('mongodb').MongoClient;
 const cors = require('cors'); 
 
 const app = express();
-app.use(cors({
-    origin: 'https://thiago-caffaro.github.io'
-}));
-app.use(express.json());
+// Permitir apenas este domínio
+// app.use(cors({
+//     origin: 'https://thiago-caffaro.github.io'
+// }));
+// app.use(express.json());
 
 // Permitir qualquer dominio
-// app.use((req, res, next) => {
-//    res.header('Access-Control-Allow-Origin', '*');
-//    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-//    next();
-// });
+app.use((req, res, next) => {
+   res.header('Access-Control-Allow-Origin', '*');
+   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+   next();
+});
 
 const port = 3000;
 const url = 'mongodb+srv://ThiagoCaffaro:adminPassword@banco-1.zljf1bi.mongodb.net/?retryWrites=true&w=majority&appName=Banco-1';
