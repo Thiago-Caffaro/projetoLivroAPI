@@ -1,6 +1,10 @@
 const express = require('express');
 const MongoClient = require('mongodb').MongoClient;
 const cors = require('cors');
+
+const multer  = require('multer');
+const upload = multer();
+
 const dbUrl = require('./config');
 
 const app = express();
@@ -39,7 +43,7 @@ client.connect()
             }
         });
 
-        app.post('/add', async (req, res) => {
+        app.post('/add', upload.none(), async (req, res) => {
             if (req.body) {
                 try {
                   const result = await rpgBaseCollection.insertOne(req.body);
