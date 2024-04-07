@@ -44,9 +44,11 @@ client.connect()
         });
 
         app.post('/add', upload.none(), async (req, res) => {
+            
             if (req.body) {
                 try {
-                  const result = await rpgBaseCollection.insertOne(req.body);
+                let data = JSON.parse(req.body.data);
+                  const result = await rpgBaseCollection.insertOne(data);
                   res.json(result);
                 } catch (err) {
                   console.log(err.stack);
