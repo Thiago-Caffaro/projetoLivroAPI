@@ -1,8 +1,6 @@
 const express = require('express');
 const MongoClient = require('mongodb').MongoClient;
 const cors = require('cors');
-const multer  = require('multer');
-const upload = multer({ dest: 'uploads/' });
 const dbUrl = require('./config');
 
 const app = express();
@@ -30,7 +28,6 @@ client.connect()
         console.log("Conectado com sucesso ao servidor");
         const db = client.db(dbName);
         const rpgBaseCollection = db.collection('talesFromTheLoop');
-        const rpgImageCollection = db.collection('talesFromTheLoop');
 
         app.get('/', async (req, res) => {
             try {
@@ -46,19 +43,6 @@ client.connect()
             if (req.body) {
                 try {
                   const result = await rpgBaseCollection.insertOne(req.body);
-                  res.json(result);
-                } catch (err) {
-                  console.log(err.stack);
-                  res.status(500).send(`Ocorreu o erro ao inserir o documento: ${err.stack}`);
-                }
-              } else {
-                res.status(400).send('Nenhum corpo de requisição foi enviado');
-              }
-        });
-        app.post('/addImages', upload.array('cardsArray'),async (req, res) => {
-            if (req.body) {
-                try {
-                  const result = await rpgImageCollection.insertOne(req.body);
                   res.json(result);
                 } catch (err) {
                   console.log(err.stack);
