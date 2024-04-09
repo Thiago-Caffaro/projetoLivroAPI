@@ -35,7 +35,7 @@ client.connect()
 
         app.get('/', async (req, res) => {
             try {
-                const docs = await collection.find({}).toArray();
+                const docs = await rpgBaseCollection.find({}).toArray();
                 res.json(docs);
             } catch (err) {
                 console.log(err.stack);
