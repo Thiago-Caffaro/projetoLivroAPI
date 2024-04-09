@@ -3,6 +3,9 @@ const MongoClient = require('mongodb').MongoClient;
 const cors = require('cors');
 
 const multer  = require('multer');
+multer({
+  limits: { fieldSize: 2 * 1024 * 1024 }
+})
 const upload = multer();
 
 const dbUrl = require('./config');
