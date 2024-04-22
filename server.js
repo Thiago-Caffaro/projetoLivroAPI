@@ -24,7 +24,7 @@ app.use((req, res, next) => {
    next();
 });
 
-const port = 3000;
+const port = 2083;
 const url = dbUrl;
 const dbName = 'projetoLivroRpg';
 
@@ -50,7 +50,7 @@ client.connect()
             
             if (req.body) {
                 try {
-                let data = JSON.parse(req.body.data);
+                  let data = JSON.parse(req.body.data);
                   const result = await rpgBaseCollection.insertOne(data);
                   res.json(result);
                 } catch (err) {
